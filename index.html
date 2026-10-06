@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSE | Haute Parfumerie & Fine Fragrances (₹2,000 - ₹5,000)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alabaster: '#FAF8F5',
+                        linen: '#F3EFEA',
+                        obsidian: '#111111',
+                        gold: '#C5A059',
+                        lightgold: '#E6D2A8',
+                        charcoal: '#222222',
+                        sand: '#E8E2D9'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
+            color: #111111;
+            overflow-x: hidden;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-display {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 3px;
+        }
+
+        /* Glassmorphism & Subtle Effects */
+        .glass-nav {
+            background: rgba(250, 248, 245, 0.88);
+            backdrop-filter: blur(12px);
+        }
+        
+        /* Toast & Animations */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in {
+            animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Custom Hover Zoom */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+        .img-zoom-container img {
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .img-zoom-container:hover img {
+            transform: scale(1.06);
+        }
+
+        .gold-border-glow:hover {
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.25);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between selection:bg-gold selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-obsidian text-alabaster text-xs py-2.5 px-4 text-center tracking-widest uppercase font-light border-b border-gold/20 flex justify-between items-center px-4 md:px-8">
+        <span class="hidden md:inline text-gold">✦ Free Shipping Over ₹3,500 | All Scents ₹2,000 – ₹5,000</span>
+        <span class="mx-auto md:mx-0">Enjoy 20% OFF With Code <button onclick="applyPromoCodeDirect('MUSE20')" class="text-gold font-semibold underline hover:text-white transition-colors cursor-pointer ml-1">MUSE20</button></span>
+        <div class="hidden md:flex items-center space-x-4">
+            <button onclick="toggleOffersModal()" class="text-gold font-medium hover:underline flex items-center space-x-1">
+                <i data-lucide="tag" class="w-3 h-3"></i>
+                <span>Active Offers</span>
+            </button>
+            <a href="#quiz" class="underline hover:text-gold transition-colors">Take Scent Quiz</a>
+        </div>
+    </div>
+
+    <!-- Sticky Header Navigation -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-linen transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-obsidian focus:outline-none p-1" aria-label="Toggle menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="#" class="flex flex-col items-center group">
+                <span class="font-serif text-3xl md:text-4xl tracking-[0.3em] font-light text-obsidian group-hover:text-gold transition-colors duration-300">MUSE</span>
+                <span class="text-[9px] tracking-[0.4em] uppercase text-gold font-medium -mt-1">PARFUMS PARIS</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-xs tracking-[0.2em] uppercase text-charcoal/80 font-medium">
+                <a href="#collection" class="hover:text-gold transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold hover:after:w-full after:transition-all">Collection</a>
+                <a href="#notes-pyramid" class="hover:text-gold transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold hover:after:w-full after:transition-all">Scent Notes</a>
+                <a href="#discovery-set" class="hover:text-gold transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold hover:after:w-full after:transition-all">Custom Coffret</a>
+                <a href="#quiz" class="hover:text-gold transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold hover:after:w-full after:transition-all">Scent Finder</a>
+                <button onclick="toggleOffersModal()" class="text-gold font-semibold hover:text-obsidian transition-colors py-1 relative flex items-center space-x-1.5 bg-gold/10 px-3 py-1 rounded-full border border-gold/30">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span>Offers</span>
+                </button>
+            </nav>
+
+            <!-- Actions Header Right -->
+            <div class="flex items-center space-x-5 text-obsidian">
+                <button onclick="toggleSearchModal()" class="hover:text-gold transition-colors p-1" title="Search">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button onclick="openQuizModal()" class="hidden sm:flex items-center space-x-1 text-xs tracking-widest uppercase hover:text-gold transition-colors bg-linen px-3 py-1.5 rounded-full border border-gold/30">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
+                    <span>Match</span>
+                </button>
+                <button onclick="toggleCartDrawer()" class="hover:text-gold transition-colors relative p-1" title="Cart">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span id="cart-count-badge" class="absolute -top-1.5 -right-1.5 bg-gold text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-semibold scale-0 transition-transform duration-300">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-alabaster border-b border-linen px-6 py-6 space-y-4 text-xs tracking-[0.2em] uppercase font-medium">
+            <a href="#collection" onclick="toggleMobileMenu()" class="block py-2 border-b border-linen hover:text-gold">The Collection (₹2,000–₹5,000)</a>
+            <a href="#notes-pyramid" onclick="toggleMobileMenu()" class="block py-2 border-b border-linen hover:text-gold">Scent Notes Explorer</a>
+            <a href="#discovery-set" onclick="toggleMobileMenu()" class="block py-2 border-b border-linen hover:text-gold">Custom Discovery Box</a>
+            <button onclick="toggleMobileMenu(); toggleOffersModal();" class="block w-full text-left py-2 border-b border-linen text-gold font-bold">★ Special Offers & Promos</button>
+            <a href="#quiz" onclick="toggleMobileMenu()" class="block py-2 border-b border-linen hover:text-gold">Scent Finder Quiz</a>
+            <a href="#atelier" onclick="toggleMobileMenu()" class="block py-2 hover:text-gold">Atelier & Craft</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative min-h-[55vh] flex items-center justify-center text-center px-6 overflow-hidden bg-obsidian">
+            <!-- Background Image with Fade Gradient -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1920&q=85" 
+                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1920&q=80';"
+                     alt="MUSE Luxury Perfume Bottle" 
+                     class="w-full h-full object-cover object-center opacity-45 scale-105 transform hover:scale-100 transition-transform duration-10000">
+                <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-obsidian/70"></div>
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto py-12 text-alabaster">
+                <p class="text-gold text-[11px] md:text-xs tracking-[0.4em] uppercase font-medium mb-2 animate-fade-in">Accessible Fine Parfumerie • Range: ₹2,000 – ₹5,000</p>
+                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl font-light tracking-wider leading-tight mb-4">
+                    Aura of the <span class="italic font-display text-gold font-normal">Unseen</span>
+                </h1>
+                <p class="text-alabaster/80 text-xs md:text-sm max-w-xl mx-auto font-light leading-relaxed tracking-wide mb-6">
+                    Artisanal extraits, travel sprays, and luxury house formulations carefully curated between <strong class="text-gold">₹2,000 and ₹5,000</strong>. Hand-poured using precious resins and organic botanical oils.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="#collection" class="w-full sm:w-auto px-6 py-2.5 bg-gold text-obsidian text-[11px] tracking-[0.2em] uppercase font-semibold hover:bg-alabaster transition-all duration-300 shadow-xl">
+                        Shop ₹2,000 – ₹5,000 Collection
+                    </a>
+                    <button onclick="openQuizModal()" class="w-full sm:w-auto px-6 py-2.5 border border-alabaster/40 text-alabaster text-[11px] tracking-[0.2em] uppercase font-medium hover:border-gold hover:text-gold transition-all duration-300 backdrop-blur-sm">
+                        Find Signature Match
+                    </button>
+                </div>
+
+                <!-- Subtle Feature Badges -->
+                <div class="mt-8 pt-6 border-t border-alabaster/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-[10px] tracking-widest text-alabaster/60 uppercase">
+                    <div class="flex flex-col items-center space-y-0.5">
+                        <i data-lucide="droplet" class="w-3.5 h-3.5 text-gold mb-0.5"></i>
+                        <span>Extrait De Parfum</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-0.5">
+                        <i data-lucide="tag" class="w-3.5 h-3.5 text-gold mb-0.5"></i>
+                        <span>Guaranteed ₹2k - ₹5k</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-0.5">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-gold mb-0.5"></i>
+                        <span>100% Authentic Scents</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-0.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold mb-0.5"></i>
+                        <span>Complimentary Discovery Vial</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collection Section -->
+        <section id="collection" class="py-12 max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Curated Luxury Under ₹5,000</span>
+                <h2 class="font-serif text-2xl md:text-3xl font-light text-obsidian mt-1 mb-2">Haute Parfumerie & Iconic Travel Editions</h2>
+                <p class="text-charcoal/70 text-xs font-light leading-relaxed">
+                    Explore iconic fragrance houses and artisanal extraits in purse sprays, travel atomizers, and full-size bottles, all strictly priced between <strong>₹2,000 and ₹5,000</strong>.
+                </p>
+            </div>
+
+            <!-- Banner Promo -->
+            <div class="mb-10 bg-gradient-to-r from-obsidian via-charcoal to-obsidian text-alabaster p-6 rounded-2xl border border-gold/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gold/20 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="space-y-1 text-center md:text-left relative z-10">
+                    <span class="bg-gold text-obsidian text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full">Limited Season Offer</span>
+                    <h3 class="font-serif text-xl md:text-2xl text-alabaster font-light mt-1">Unlock 20% Off Your Entire Order</h3>
+                    <p class="text-xs text-alabaster/70 font-light">Apply promo code <strong class="text-gold tracking-widest uppercase font-semibold">MUSE20</strong> at checkout or click below to auto-claim.</p>
+                </div>
+                <div class="flex items-center space-x-3 relative z-10">
+                    <button onclick="applyPromoCodeDirect('MUSE20')" class="px-6 py-2.5 bg-gold text-obsidian text-xs font-semibold uppercase tracking-widest rounded-lg hover:bg-alabaster transition-all shadow-md whitespace-nowrap">
+                        Claim 20% OFF
+                    </button>
+                    <button onclick="toggleOffersModal()" class="px-4 py-2.5 border border-alabaster/30 text-alabaster text-xs font-medium uppercase tracking-widest rounded-lg hover:border-gold hover:text-gold transition-all whitespace-nowrap">
+                        All Promos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Price & Category Filters -->
+            <div class="space-y-3 mb-8">
+                <!-- Price Tier Tabs -->
+                <div class="flex flex-wrap items-center justify-center gap-2" id="price-filter-buttons">
+                    <span class="text-[10px] uppercase font-semibold text-charcoal/50 mr-2 tracking-widest">Price Tier:</span>
+                    <button onclick="filterByPrice('all')" class="price-btn active px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-gold bg-gold text-white transition-all">All (₹2,000 - ₹5,000)</button>
+                    <button onclick="filterByPrice('p1')" class="price-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">₹2,000 – ₹3,000</button>
+                    <button onclick="filterByPrice('p2')" class="price-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">₹3,000 – ₹4,000</button>
+                    <button onclick="filterByPrice('p3')" class="price-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">₹4,000 – ₹5,000</button>
+                </div>
+
+                <!-- Brand / Category Filters -->
+                <div class="flex flex-wrap items-center justify-center gap-2" id="filter-buttons">
+                    <span class="text-[10px] uppercase font-semibold text-charcoal/50 mr-2 tracking-widest">House:</span>
+                    <button onclick="filterProducts('all')" class="filter-btn active px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-gold bg-gold text-white transition-all">All Houses</button>
+                    <button onclick="filterProducts('chanel')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Chanel</button>
+                    <button onclick="filterProducts('mfk')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Maison Francis Kurkdjian</button>
+                    <button onclick="filterProducts('tom-ford')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Tom Ford</button>
+                    <button onclick="filterProducts('creed')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Creed</button>
+                    <button onclick="filterProducts('niche')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Byredo & Le Labo</button>
+                    <button onclick="filterProducts('dior-ysl')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Dior & YSL</button>
+                    <button onclick="filterProducts('bellavita')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">Bella Vita Coffret</button>
+                    <button onclick="filterProducts('muse')" class="filter-btn px-3 py-1 rounded-full text-[10px] uppercase tracking-wider border border-linen text-charcoal hover:border-gold transition-all">MUSE Atelier</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+                <!-- Product items dynamically injected via JS -->
+            </div>
+        </section>
+
+        <!-- Olfactory Scent Pyramid Interactive Section -->
+        <section id="notes-pyramid" class="bg-linen/60 py-14 border-y border-sand">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-4">
+                        <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Fragrance Anatomy</span>
+                        <h2 class="font-serif text-2xl md:text-3xl font-light text-obsidian">The Olfactory Pyramid</h2>
+                        <p class="text-charcoal/80 text-xs font-light leading-relaxed">
+                            Fine fragrances evolve over time as different notes evaporate off your skin. Click on each tier of our signature formulation to discover how top, heart, and base notes harmonize.
+                        </p>
+                        
+                        <div class="space-y-2.5 pt-2">
+                            <button onclick="selectPyramidTier('top')" id="btn-tier-top" class="w-full text-left p-3.5 bg-alabaster border border-gold rounded-lg transition-all shadow-sm flex justify-between items-center group">
+                                <div>
+                                    <h4 class="font-serif text-base font-medium text-obsidian group-hover:text-gold transition-colors">1. Top Notes (Head)</h4>
+                                    <p class="text-[11px] text-charcoal/60 mt-0.5">First impression • Lasts 15-30 minutes</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gold"></i>
+                            </button>
+
+                            <button onclick="selectPyramidTier('heart')" id="btn-tier-heart" class="w-full text-left p-3.5 bg-alabaster/60 border border-transparent hover:border-gold rounded-lg transition-all flex justify-between items-center group">
+                                <div>
+                                    <h4 class="font-serif text-base font-medium text-obsidian group-hover:text-gold transition-colors">2. Heart Notes (Heart)</h4>
+                                    <p class="text-[11px] text-charcoal/60 mt-0.5">Core character • Lasts 2-4 hours</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-charcoal/40 group-hover:text-gold"></i>
+                            </button>
+
+                            <button onclick="selectPyramidTier('base')" id="btn-tier-base" class="w-full text-left p-3.5 bg-alabaster/60 border border-transparent hover:border-gold rounded-lg transition-all flex justify-between items-center group">
+                                <div>
+                                    <h4 class="font-serif text-base font-medium text-obsidian group-hover:text-gold transition-colors">3. Base Notes (Dry Down)</h4>
+                                    <p class="text-[11px] text-charcoal/60 mt-0.5">Deep foundation • Lasts 8-24+ hours</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-charcoal/40 group-hover:text-gold"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Display Box -->
+                    <div class="lg:col-span-7 bg-alabaster p-6 md:p-8 border border-gold/30 rounded-2xl shadow-xl relative overflow-hidden">
+                        <div class="absolute -top-12 -right-12 w-48 h-48 bg-gold/10 rounded-full blur-2xl pointer-events-none"></div>
+                        
+                        <div id="pyramid-content" class="space-y-4">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Discovery Box Builder -->
+        <section id="discovery-set" class="py-14 max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="bg-obsidian text-alabaster rounded-3xl p-6 md:p-10 relative overflow-hidden border border-gold/30">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-6 space-y-4">
+                        <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Curate Your Experience</span>
+                        <h2 class="font-serif text-2xl md:text-4xl font-light text-alabaster">Custom Discovery Coffret</h2>
+                        <p class="text-alabaster/70 text-xs font-light leading-relaxed">
+                            Select 3 travel-sized Extrait de Parfum atomizers (10ml each) in an embossed black lacquer box. Includes a ₹2,000 voucher towards your full-sized bottle purchase.
+                        </p>
+
+                        <!-- Selected Vials Indicator -->
+                        <div class="pt-2">
+                            <label class="block text-[11px] uppercase tracking-widest text-gold mb-2">Your Selection (<span id="set-count">0</span>/3 Selected)</label>
+                            <div class="grid grid-cols-3 gap-2" id="coffret-slots">
+                                <div class="p-2.5 border border-dashed border-alabaster/30 rounded-xl text-center text-[11px] text-alabaster/40 flex flex-col items-center justify-center min-h-[60px]">
+                                    <span>Empty Vial 1</span>
+                                </div>
+                                <div class="p-2.5 border border-dashed border-alabaster/30 rounded-xl text-center text-[11px] text-alabaster/40 flex flex-col items-center justify-center min-h-[60px]">
+                                    <span>Empty Vial 2</span>
+                                </div>
+                                <div class="p-2.5 border border-dashed border-alabaster/30 rounded-xl text-center text-[11px] text-alabaster/40 flex flex-col items-center justify-center min-h-[60px]">
+                                    <span>Empty Vial 3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-between">
+                            <div>
+                                <span class="text-xl font-serif text-gold">₹3,500</span>
+                                <span class="text-[10px] text-alabaster/60 block">Includes ₹2,000 Voucher Credit</span>
+                            </div>
+                            <button id="add-coffret-btn" disabled onclick="addCoffretToCart()" class="px-6 py-2.5 bg-gold/50 text-obsidian font-semibold text-[11px] uppercase tracking-widest rounded-lg transition-all cursor-not-allowed">
+                                Add Box To Bag
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Selector Grid -->
+                    <div class="lg:col-span-6 bg-charcoal/50 p-5 rounded-2xl border border-alabaster/10 space-y-3">
+                        <h3 class="text-[11px] font-semibold tracking-widest uppercase text-alabaster/80 mb-1">Tap to add fragrances to your box:</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="coffret-options">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Atelier Story Section -->
+        <section id="atelier" class="py-14 bg-alabaster border-t border-linen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    
+                    <div class="relative max-w-md mx-auto lg:max-w-none">
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+                            <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1000&q=80" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1000&q=80';"
+                                 alt="Atelier Fragrance Crafting" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 bg-obsidian text-alabaster p-5 rounded-xl max-w-xs shadow-xl hidden sm:block border border-gold/30">
+                            <span class="text-gold font-serif text-2xl block">100%</span>
+                            <span class="text-[10px] uppercase tracking-wider text-alabaster/80 mt-0.5 block">Hand-Poured Extrait Concentration in Grasse, France</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Craftsmanship & Origin</span>
+                        <h2 class="font-serif text-2xl md:text-4xl font-light text-obsidian leading-tight">
+                            Composed Like Music, Bottled as Art
+                        </h2>
+                        <p class="text-charcoal/80 text-xs font-light leading-relaxed">
+                            At MUSE, we reject mass production. Each formulation undergoes a meticulous 6-month maceration process in small batch glass carboys, allowing raw ingredients like Florentine Orris, Bulgarian Rose, and Wild Tonka Bean to naturally meld into an orchestra of scent.
+                        </p>
+                        <p class="text-charcoal/80 text-xs font-light leading-relaxed">
+                            Every item in our collection is priced transparently between <strong>₹2,000 and ₹5,000</strong>, ensuring world-class haute perfumerie is within reach.
+                        </p>
+
+                        <div class="pt-4 grid grid-cols-2 gap-4 border-t border-linen">
+                            <div>
+                                <h4 class="font-serif text-xl text-gold mb-0.5">30% Concentration</h4>
+                                <p class="text-[11px] text-charcoal/60">Pure extrait quality ensuring all-day luxury wear.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-xl text-gold mb-0.5">₹2k - ₹5k Promise</h4>
+                                <p class="text-[11px] text-charcoal/60">Accessible pricing with uncompromised French luxury quality.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-14 bg-linen/40 border-t border-sand">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-lg mx-auto mb-10">
+                    <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Client Reflections</span>
+                    <h2 class="font-serif text-2xl md:text-3xl font-light text-obsidian mt-1">Praise For MUSE</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="bg-alabaster p-6 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex text-gold text-xs space-x-1">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <p class="text-xs text-charcoal/80 italic leading-relaxed">
+                                "MUSE NO. 1 (₹2,900) is intoxicating. The cedar and Madagascar vanilla dry down stays on my wool coats for days. Exceptional value for this luxury level."
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-linen mt-4 flex justify-between items-center text-[11px]">
+                            <span class="font-semibold text-obsidian">Elena R. — Mumbai</span>
+                            <span class="text-gold/80">Verified Buyer</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-alabaster p-6 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex text-gold text-xs space-x-1">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <p class="text-xs text-charcoal/80 italic leading-relaxed">
+                                "The Scent Finder Quiz recommended Miss Dior Roller-Pearl at ₹2,600 and it was frighteningly accurate. Rich floral elegance with velvety rose."
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-linen mt-4 flex justify-between items-center text-[11px]">
+                            <span class="font-semibold text-obsidian">Marcus V. — New Delhi</span>
+                            <span class="text-gold/80">Verified Buyer</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-alabaster p-6 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex text-gold text-xs space-x-1">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <p class="text-xs text-charcoal/80 italic leading-relaxed">
+                                "The ₹3,500 discovery coffret was the best luxury purchase I made this year. Beautifully packaged and high fragrance concentration that actually lasts."
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-linen mt-4 flex justify-between items-center text-[11px]">
+                            <span class="font-semibold text-obsidian">Sophia K. — Bengaluru</span>
+                            <span class="text-gold/80">Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-out Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-obsidian/60 backdrop-blur-sm"></div>
+
+        <!-- Content Panel -->
+        <div id="cart-panel" class="absolute top-0 right-0 h-full w-full max-w-md bg-alabaster shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 pointer-events-auto">
+            <!-- Cart Header -->
+            <div class="p-6 border-b border-linen flex justify-between items-center bg-white">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-gold"></i>
+                    <h3 class="font-serif text-xl text-obsidian font-medium">Your Shopping Bag</h3>
+                </div>
+                <button onclick="toggleCartDrawer()" class="text-charcoal hover:text-gold transition-colors p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Free Shipping Progress Bar -->
+            <div class="bg-linen/60 px-6 py-3 border-b border-sand text-xs">
+                <div class="flex justify-between text-charcoal/80 mb-1.5 font-medium">
+                    <span id="shipping-progress-text">Add ₹3,500 for Free Express Shipping</span>
+                    <span id="shipping-progress-percent">0%</span>
+                </div>
+                <div class="w-full bg-sand h-1.5 rounded-full overflow-hidden">
+                    <div id="shipping-progress-bar" class="bg-gold h-full w-0 transition-all duration-500"></div>
+                </div>
+            </div>
+
+            <!-- Cart Items Scroll Area -->
+            <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-6">
+                <!-- Cart items dynamically rendered -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="p-6 border-t border-linen bg-white space-y-4">
+                
+                <!-- Interactive Promo Code Application Box -->
+                <div class="bg-linen/50 p-3 rounded-xl border border-sand">
+                    <label class="block text-[10px] uppercase font-semibold tracking-wider text-charcoal/70 mb-1.5">Have a Promo Code?</label>
+                    <div class="flex items-center space-x-2">
+                        <div class="relative flex-grow">
+                            <input type="text" id="promo-input" placeholder="e.g. MUSE20" class="w-full bg-white px-3 py-2 text-xs font-semibold text-obsidian uppercase tracking-wider border border-sand rounded-lg focus:outline-none focus:border-gold">
+                        </div>
+                        <button onclick="applyPromoCode()" class="px-4 py-2 bg-obsidian text-alabaster text-xs font-semibold uppercase tracking-wider rounded-lg hover:bg-gold hover:text-obsidian transition-colors">
+                            Apply
+                        </button>
+                    </div>
+
+                    <!-- Applied Promo Tag -->
+                    <div id="applied-promo-tag" class="hidden mt-2.5 flex items-center justify-between bg-gold/15 px-3 py-1.5 rounded-lg border border-gold/30">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-gold"></i>
+                            <span class="text-xs font-semibold text-obsidian uppercase tracking-wider">Code <span id="promo-code-name" class="text-gold font-bold"></span> Applied</span>
+                        </div>
+                        <button onclick="removePromoCode()" class="text-charcoal/60 hover:text-red-600 transition-colors p-0.5">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Price Summary -->
+                <div class="space-y-2 text-xs text-charcoal/80">
+                    <div class="flex justify-between">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal" class="font-semibold text-obsidian">₹0</span>
+                    </div>
+                    <div id="discount-row" class="hidden flex justify-between text-gold font-medium">
+                        <span>Offer Discount (<span id="discount-label">0%</span>)</span>
+                        <span id="cart-discount-amount" class="font-semibold">-₹0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Complimentary Sample Vial</span>
+                        <span class="text-gold font-medium">Included</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Estimated Express Shipping</span>
+                        <span id="cart-shipping-cost">Calculated at checkout</span>
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-linen flex justify-between text-sm font-serif text-obsidian font-semibold">
+                    <span>Total Amount</span>
+                    <span id="cart-total" class="text-gold font-sans text-base">₹0</span>
+                </div>
+
+                <button onclick="simulateCheckout()" class="w-full py-4 bg-gold text-obsidian font-semibold text-xs uppercase tracking-[0.2em] rounded-lg hover:bg-obsidian hover:text-white transition-all shadow-lg flex items-center justify-center space-x-2">
+                    <span>Proceed To Checkout</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Special Offers Modal -->
+    <div id="offers-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/80 backdrop-blur-md">
+        <div class="bg-alabaster rounded-3xl max-w-xl w-full p-6 md:p-8 border border-gold/30 shadow-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleOffersModal()" class="absolute top-6 right-6 text-charcoal hover:text-gold p-1">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="space-y-6">
+                <div class="text-center space-y-1">
+                    <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Exclusive Vault</span>
+                    <h3 class="font-serif text-2xl md:text-3xl text-obsidian font-light">Active Offers & Promo Codes</h3>
+                    <p class="text-xs text-charcoal/60 font-light">Click on any offer below to automatically copy and apply it to your shopping bag.</p>
+                </div>
+
+                <div class="space-y-3" id="offers-list">
+                    <!-- Offer 1 -->
+                    <div class="p-4 bg-white rounded-2xl border border-gold/30 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group hover:border-gold transition-all">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-gold/20 text-gold text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">20% OFF</span>
+                                <h4 class="font-serif font-medium text-obsidian text-sm">Grand Atelier Welcome Offer</h4>
+                            </div>
+                            <p class="text-[11px] text-charcoal/70">Get 20% discount on any fragrance order with no minimum limit.</p>
+                            <span class="inline-block text-[10px] text-gold font-mono font-bold tracking-widest bg-linen px-2 py-0.5 rounded">Code: MUSE20</span>
+                        </div>
+                        <button onclick="applyPromoCodeDirect('MUSE20'); toggleOffersModal();" class="w-full sm:w-auto px-5 py-2 bg-obsidian text-alabaster text-xs font-medium uppercase tracking-wider rounded-lg group-hover:bg-gold group-hover:text-obsidian transition-colors">
+                            Apply Offer
+                        </button>
+                    </div>
+
+                    <!-- Offer 2 -->
+                    <div class="p-4 bg-white rounded-2xl border border-linen shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group hover:border-gold transition-all">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">₹1,000 OFF</span>
+                                <h4 class="font-serif font-medium text-obsidian text-sm">Luxury Collector's Reward</h4>
+                            </div>
+                            <p class="text-[11px] text-charcoal/70">Flat ₹1,000 instant discount on orders exceeding ₹4,000.</p>
+                            <span class="inline-block text-[10px] text-gold font-mono font-bold tracking-widest bg-linen px-2 py-0.5 rounded">Code: LUXURY1000</span>
+                        </div>
+                        <button onclick="applyPromoCodeDirect('LUXURY1000'); toggleOffersModal();" class="w-full sm:w-auto px-5 py-2 bg-obsidian text-alabaster text-xs font-medium uppercase tracking-wider rounded-lg group-hover:bg-gold group-hover:text-obsidian transition-colors">
+                            Apply Offer
+                        </button>
+                    </div>
+
+                    <!-- Offer 3 -->
+                    <div class="p-4 bg-white rounded-2xl border border-linen shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group hover:border-gold transition-all">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-purple-100 text-purple-800 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">15% OFF</span>
+                                <h4 class="font-serif font-medium text-obsidian text-sm">Parfum Discovery Privilege</h4>
+                            </div>
+                            <p class="text-[11px] text-charcoal/70">15% off on orders above ₹3,000.</p>
+                            <span class="inline-block text-[10px] text-gold font-mono font-bold tracking-widest bg-linen px-2 py-0.5 rounded">Code: PARFUM15</span>
+                        </div>
+                        <button onclick="applyPromoCodeDirect('PARFUM15'); toggleOffersModal();" class="w-full sm:w-auto px-5 py-2 bg-obsidian text-alabaster text-xs font-medium uppercase tracking-wider rounded-lg group-hover:bg-gold group-hover:text-obsidian transition-colors">
+                            Apply Offer
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center pt-2 border-t border-linen">
+                    <button onclick="toggleOffersModal()" class="text-xs text-charcoal/60 uppercase tracking-widest hover:text-gold">Close Offers Window</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scent Finder Quiz Modal -->
+    <div id="quiz-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/75 backdrop-blur-md">
+        <div class="bg-alabaster rounded-3xl max-w-2xl w-full p-8 md:p-12 border border-gold/30 shadow-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuizModal()" class="absolute top-6 right-6 text-charcoal hover:text-gold">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div id="quiz-step-container">
+                <!-- Quiz Steps rendered dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickview-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/75 backdrop-blur-md">
+        <div class="bg-alabaster rounded-3xl max-w-3xl w-full p-6 md:p-10 border border-gold/30 shadow-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuickView()" class="absolute top-6 right-6 text-charcoal hover:text-gold z-10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="quickview-content">
+                <!-- Quick view details injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden flex items-start justify-center pt-24 px-4 bg-obsidian/80 backdrop-blur-md">
+        <div class="bg-alabaster rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-gold/30">
+            <div class="flex items-center border-b border-gold/40 pb-3">
+                <i data-lucide="search" class="w-5 h-5 text-gold mr-3"></i>
+                <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Search notes (e.g. Vanilla, Jasmine, Cedar)..." class="w-full bg-transparent text-sm focus:outline-none text-obsidian placeholder:text-charcoal/40">
+                <button onclick="toggleSearchModal()" class="text-xs text-charcoal/60 uppercase tracking-widest hover:text-gold">Close</button>
+            </div>
+            <div id="search-results" class="mt-4 space-y-2 max-h-60 overflow-y-auto">
+                <p class="text-xs text-charcoal/50 text-center py-4">Type to search by ingredient or perfume name...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+    <!-- Registered Office & Location -->
+    <section id="registered-office" class="py-14 bg-linen/40 border-t border-sand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold">Registered Office</span>
+                <h2 class="font-serif text-2xl md:text-3xl font-light text-obsidian mt-1 mb-2">Visit MUSE</h2>
+                <p class="text-charcoal/70 text-xs font-light leading-relaxed">
+                    Location of the Registered Office: Near Lakhota Lake, Jamnagar – 361001, Gujarat, India.
+                </p>
+            </div>
+
+            <div class="bg-alabaster rounded-2xl border border-gold/30 shadow-xl overflow-hidden">
+                <div class="p-5 md:p-6 flex items-center justify-between gap-4 border-b border-linen">
+                    <div>
+                        <h3 class="font-serif text-lg md:text-xl text-obsidian font-medium">Registered Office Location</h3>
+                        <p class="text-[11px] text-charcoal/60 mt-1">Near Lakhota Lake, Jamnagar – 361001</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Lakhota+Lake%2C+Jamnagar%2C+Gujarat+361001"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="shrink-0 px-4 py-2 bg-gold text-obsidian text-[10px] uppercase tracking-widest font-semibold rounded-lg hover:bg-obsidian hover:text-white transition-colors">
+                        Open in Google Maps
+                    </a>
+                </div>
+
+                <div class="w-full aspect-[16/8] min-h-[300px]">
+                    <iframe
+                        src="https://www.google.com/maps?q=Lakhota+Lake%2C+Jamnagar%2C+Gujarat+361001&output=embed"
+                        class="w-full h-full border-0"
+                        style="min-height:300px;"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen
+                        title="Google Map showing MUSE registered office near Lakhota Lake, Jamnagar">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-obsidian text-alabaster pt-16 pb-12 border-t border-gold/20">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-alabaster/10">
+            
+            <div class="lg:col-span-2 space-y-4">
+                <span class="font-serif text-3xl tracking-[0.3em] font-light text-alabaster block">MUSE</span>
+                <p class="text-xs text-alabaster/60 font-light max-w-sm leading-relaxed">
+                    MUSE Haute Parfumerie is an independent fragrance atelier producing artisanal extraits de parfum, hand-bottled in limited micro-batches in Grasse, France. All products are priced within ₹2,000 – ₹5,000.
+                </p>
+                <div class="pt-2 flex space-x-4 text-alabaster/70">
+                    <a href="#" class="hover:text-gold transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-gold transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-gold transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-xs font-semibold tracking-[0.2em] uppercase text-gold">Explore</h4>
+                <ul class="space-y-2 text-xs text-alabaster/70">
+                    <li><a href="#collection" class="hover:text-gold transition-colors">Extrait De Parfums</a></li>
+                    <li><a href="#discovery-set" class="hover:text-gold transition-colors">Custom Coffret Builder</a></li>
+                    <li><a href="#notes-pyramid" class="hover:text-gold transition-colors">Olfactory Pyramid</a></li>
+                    <li><a href="#quiz" class="hover:text-gold transition-colors">Scent Finder Engine</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-xs font-semibold tracking-[0.2em] uppercase text-gold">Client Care</h4>
+                <ul class="space-y-2 text-xs text-alabaster/70">
+                    <li><a href="#" onclick="showToast('Free Express Shipping over ₹3,500', 'info')" class="hover:text-gold transition-colors">Express Shipping</a></li>
+                    <li><a href="#" onclick="showToast('Sample Kit Guarantee details', 'info')" class="hover:text-gold transition-colors">Sample Guarantee</a></li>
+                    <li><a href="#" onclick="showToast('Authenticity Certificate details', 'info')" class="hover:text-gold transition-colors">Authenticity Certificate</a></li>
+                    <li><a href="#" onclick="showToast('Boutique Concierge connected', 'info')" class="hover:text-gold transition-colors">Boutique Concierge</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-xs font-semibold tracking-[0.2em] uppercase text-gold">Gazette</h4>
+                <p class="text-xs text-alabaster/60 font-light">
+                    Subscribe for exclusive private batch releases and fragrant olfactory essays.
+                </p>
+                <form onsubmit="handleNewsletter(event)" class="space-y-2">
+                    <input type="email" id="newsletter-email" required placeholder="Your email address..." class="w-full px-3 py-2 bg-charcoal text-xs text-alabaster placeholder:text-alabaster/40 rounded border border-alabaster/20 focus:border-gold focus:outline-none">
+                    <button type="submit" class="w-full py-2 bg-gold text-obsidian text-xs font-semibold uppercase tracking-widest rounded hover:bg-alabaster transition-colors">
+                        Join The Club
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-alabaster/40 space-y-4 sm:space-y-0">
+            <p>© 2026 MUSE Parfums Paris. All prices strictly between ₹2,000 – ₹5,000.</p>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-alabaster">Privacy Policy</a>
+                <a href="#" class="hover:text-alabaster">Terms of Service</a>
+                <a href="#" class="hover:text-alabaster">Cookie Preferences</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const PROMO_CODES = {
+            'MUSE20': { type: 'percent', value: 0.20, label: '20% OFF', minSpend: 0 },
+            'WELCOME10': { type: 'percent', value: 0.10, label: '10% OFF', minSpend: 0 },
+            'LUXURY1000': { type: 'fixed', value: 1000, label: '₹1,000 OFF', minSpend: 4000 },
+            'PARFUM15': { type: 'percent', value: 0.15, label: '15% OFF', minSpend: 3000 }
+        };
+
+        let appliedPromo = null;
+
+        const formatINR = (amount) => {
+            return '₹' + Number(amount).toLocaleString('en-IN');
+        };
+
+        const PYRAMID_DATA = {
+            top: {
+                title: "Head Notes (Opening)",
+                duration: "First 15-30 mins",
+                description: "The delicate, volatile opening burst. High notes of Calabrian Bergamot, Pink Peppercorn, and Aldehydes awaken the senses.",
+                ingredients: ["Calabrian Bergamot", "Pink Peppercorn", "French Neroli", "Sparkling Aldehydes"],
+                craftingNote: "Head notes are meant to create an instant emotional spark when first sprayed onto the wrists or collarbone."
+            },
+            heart: {
+                title: "Heart Notes (Core Character)",
+                duration: "Lasts 2-4 hours",
+                description: "The soul of the fragrance. As the top notes fade, rich florals, spices, and precious iris root emerge to define the personality.",
+                ingredients: ["Grasse May Rose", "Grandiflorum Jasmine", "Florentine Orris", "Damask Rose"],
+                craftingNote: "Heart notes blend with your body's natural heat to create a unique scent signature."
+            },
+            base: {
+                title: "Base Notes (Dry Down)",
+                duration: "Lasts 8-24+ hours",
+                description: "The deep, mysterious foundation. Heavy molecules of Sandalwood, Bourbon Vanilla, and Golden Amber ground the perfume for all-day sillage.",
+                ingredients: ["Madagascar Vanilla", "Smoky Virginia Cedar", "Golden Amber Resin", "Bourbon Vetiver"],
+                craftingNote: "Base notes attach firmly to skin and cashmere fabrics, creating an unforgettable sensory memory."
+            }
+        };
+
+        // All Products rigorously calibrated between ₹2,000 and ₹5,000
+        const PRODUCTS = [
+            {
+                id: 'chanel-no5',
+                name: 'CHANEL N°5',
+                subtitle: 'Purse Extrait • May Rose & Jasmine',
+                brandKey: 'chanel',
+                brandName: 'Chanel Paris',
+                category: 'floral',
+                price: 3400,
+                sizes: [
+                    { ml: 15, price: 3400 },
+                    { ml: 30, price: 4800 }
+                ],
+                image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Aldehydes, Ylang-Ylang, Neroli',
+                heartNotes: 'Grasse May Rose, Jasmine, Iris Root',
+                baseNotes: 'Bourbon Vetiver, Sandalwood, Golden Amber',
+                description: 'The iconic aldehydic floral signature in a refillable travel purse spray edition.',
+                sillage: 'Iconic Sillage',
+                longevity: '12+ Hours',
+                rating: 5.0,
+                badge: 'Chanel Travel'
+            },
+            {
+                id: 'mfk-baccarat-540',
+                name: 'BACCARAT ROUGE 540',
+                subtitle: 'Maison Francis Kurkdjian • Travel Atomizer',
+                brandKey: 'mfk',
+                brandName: 'Maison Francis Kurkdjian',
+                category: 'amber',
+                price: 3900,
+                sizes: [
+                    { ml: 11, price: 3900 },
+                    { ml: 25, price: 4950 }
+                ],
+                image: 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Grandiflorum Jasmine, Bitter Almond',
+                heartNotes: 'Cedarwood, Ambergris Accord',
+                baseNotes: 'Woody Musk, Egyptian Amber Resin',
+                description: 'Luminous amber and floral alchemy in an authentic French crystal atomizer vial.',
+                sillage: 'Enveloping',
+                longevity: '18+ Hours',
+                rating: 5.0,
+                badge: 'Niche Atomizer'
+            },
+            {
+                id: 'tom-ford-tobacco-vanille',
+                name: 'TOBACCO VANILLE',
+                subtitle: 'Tom Ford Private Blend • Nomad Spray',
+                brandKey: 'tom-ford',
+                brandName: 'Tom Ford',
+                category: 'woody',
+                price: 3200,
+                sizes: [
+                    { ml: 10, price: 3200 },
+                    { ml: 30, price: 4600 }
+                ],
+                image: 'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Tobacco Leaf, Spicy Aromatics',
+                heartNotes: 'Tonka Bean, Tobacco Blossom, Cacao',
+                baseNotes: 'Dry Fruit Accord, Sweet Wood Sap',
+                description: 'Opulent, warm, and iconic blend of English tobacco leaves and dark vanilla bean.',
+                sillage: 'Heavy',
+                longevity: '14+ Hours',
+                rating: 4.9,
+                badge: 'Private Blend'
+            },
+            {
+                id: 'creed-aventus',
+                name: 'CREED AVENTUS',
+                subtitle: 'Pocket Millésime • Smoky Pineapple',
+                brandKey: 'creed',
+                brandName: 'Creed 1760',
+                category: 'fresh',
+                price: 3600,
+                sizes: [
+                    { ml: 15, price: 3600 },
+                    { ml: 30, price: 4900 }
+                ],
+                image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Blackcurrant, Italian Bergamot, French Apple',
+                heartNotes: 'Birch Wood, Moroccan Jasmine, Patchouli',
+                baseNotes: 'Oakmoss, Ambergris, Vanille',
+                description: 'Celebrating strength and success with legendary smoky birch and crisp blackcurrant.',
+                sillage: 'Radiant',
+                longevity: '12+ Hours',
+                rating: 4.9,
+                badge: 'Creed Millésime'
+            },
+            {
+                id: 'byredo-gypsy-water',
+                name: 'BYREDO GYPSY WATER',
+                subtitle: 'Byredo Stockholm • Travel EDP',
+                brandKey: 'niche',
+                brandName: 'Byredo',
+                category: 'woody',
+                price: 2800,
+                sizes: [
+                    { ml: 12, price: 2800 },
+                    { ml: 30, price: 4200 }
+                ],
+                image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Bergamot, Lemon, Pepper, Juniper Berries',
+                heartNotes: 'Incense, Pine Needles, Orris',
+                baseNotes: 'Amber, Vanilla, Sandalwood',
+                description: 'A woodsy ode to Romani culture with pine needles, incense, and soft vanilla.',
+                sillage: 'Moderate',
+                longevity: '8-10 Hours',
+                rating: 4.8,
+                badge: 'Byredo Studio'
+            },
+            {
+                id: 'le-labo-santal-33',
+                name: 'LE LABO SANTAL 33',
+                subtitle: 'Le Labo • Travel Lab Vial',
+                brandKey: 'niche',
+                brandName: 'Le Labo Grasse',
+                category: 'woody',
+                price: 3100,
+                sizes: [
+                    { ml: 15, price: 3100 },
+                    { ml: 30, price: 4500 }
+                ],
+                image: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Violet Accord, Cardamom Pods',
+                heartNotes: 'Iris, Ambrox, Soft Leather',
+                baseNotes: 'Australian Sandalwood, Cedarwood',
+                description: 'Smoky sandalwood, cardamom, and leather capturing the spirit of the American West.',
+                sillage: 'Distinctive',
+                longevity: '14+ Hours',
+                rating: 4.9,
+                badge: 'Le Labo Niche'
+            },
+            {
+                id: 'miss-dior-edp',
+                name: 'MISS DIOR EAU DE PARFUM',
+                subtitle: 'Dior Roller-Pearl • Centifolia Rose',
+                brandKey: 'dior-ysl',
+                brandName: 'Parfums Christian Dior',
+                category: 'floral',
+                price: 2600,
+                sizes: [
+                    { ml: 20, price: 2600 },
+                    { ml: 30, price: 3900 }
+                ],
+                image: 'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Lily-of-the-Valley, Peony Accord, Iris',
+                heartNotes: 'Centifolia Rose, Apricot, Peach',
+                baseNotes: 'Papua New Guinean Vanilla, Tonka Bean, Sandalwood',
+                description: 'Vibrant floral bouquet wrapped in velvety Centifolia Rose with smooth glass applicator.',
+                sillage: 'Enveloping',
+                longevity: '10-12 Hours',
+                rating: 4.9,
+                badge: 'Dior Couture'
+            },
+            {
+                id: 'ysl-libre-intense',
+                name: 'YSL LIBRE INTENSE',
+                subtitle: 'Yves Saint Laurent • Purse Spray',
+                brandKey: 'dior-ysl',
+                brandName: 'Yves Saint Laurent',
+                category: 'amber',
+                price: 2500,
+                sizes: [
+                    { ml: 15, price: 2500 },
+                    { ml: 30, price: 3800 }
+                ],
+                image: 'https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'French Lavender, Mandarin Orange, Bergamot',
+                heartNotes: 'Moroccan Orange Blossom, Jasmine, Orchid Accord',
+                baseNotes: 'Bourbon Vanilla, Ambergris, Vetiver, Tonka Bean',
+                description: 'Sensual French lavender meets burning orange blossom and orchid accord.',
+                sillage: 'Powerful',
+                longevity: '12+ Hours',
+                rating: 4.8,
+                badge: 'YSL Icon'
+            },
+            {
+                id: 'diptyque-philosykos',
+                name: 'DIPTYQUE PHILOSYKOS',
+                subtitle: 'Diptyque Paris • Travel Edition',
+                brandKey: 'niche',
+                brandName: 'Diptyque Paris',
+                category: 'fresh',
+                price: 2700,
+                sizes: [
+                    { ml: 15, price: 2700 },
+                    { ml: 30, price: 4100 }
+                ],
+                image: 'https://images.unsplash.com/photo-1512777576244-b846ac3d816f?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Fig Leaf, Fig Tree Fruit',
+                heartNotes: 'Green Accord, Coconut',
+                baseNotes: 'Fig Tree Wood, Cedar, Woody Notes',
+                description: 'Greek summer air bottled through sun-soaked fig leaves, coconut, and tree bark.',
+                sillage: 'Fresh & Airy',
+                longevity: '8 Hours',
+                rating: 4.9,
+                badge: 'Diptyque Paris'
+            },
+            {
+                id: 'muse-1',
+                name: 'MUSE NO. 1',
+                subtitle: 'Vanilla & Warm Cedar • Full Bottle',
+                brandKey: 'muse',
+                brandName: 'MUSE Parfums',
+                category: 'woody',
+                price: 2900,
+                sizes: [
+                    { ml: 30, price: 2900 },
+                    { ml: 50, price: 4200 }
+                ],
+                image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Madagascar Vanilla, Bergamot Peel',
+                heartNotes: 'Smoky Virginia Cedar, Guaiac Wood',
+                baseNotes: 'Soft Amber, Creamy Tonka Bean',
+                description: 'An enveloping sanctuary of warm woods and dark velvety vanilla. Pure Extrait concentration.',
+                sillage: 'Heavy',
+                longevity: '12+ Hours',
+                rating: 4.9,
+                badge: 'MUSE Atelier'
+            },
+            {
+                id: 'muse-2',
+                name: 'MUSE NO. 2',
+                subtitle: 'Bergamot & Sea Salt • Full Bottle',
+                brandKey: 'muse',
+                brandName: 'MUSE Parfums',
+                category: 'fresh',
+                price: 2700,
+                sizes: [
+                    { ml: 30, price: 2700 },
+                    { ml: 50, price: 3950 }
+                ],
+                image: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Calabrian Bergamot, Pink Peppercorn',
+                heartNotes: 'Mineral Sea Salt, Neroli Petals',
+                baseNotes: 'Sun-Drenched Driftwood, White Musk',
+                description: 'Crisp ocean mist captured over Mediterranean citrus groves. Invigorating and effortlessly clean.',
+                sillage: 'Moderate',
+                longevity: '8-10 Hours',
+                rating: 4.8,
+                badge: 'MUSE Atelier'
+            },
+            {
+                id: 'bellavita-luxury-coffret',
+                name: 'BELLA VITA LUXURY COFFRET',
+                subtitle: '4-Piece Deluxe Fragrance Gift Box',
+                brandKey: 'bellavita',
+                brandName: 'Bella Vita Luxury',
+                category: 'amber',
+                price: 2200,
+                sizes: [
+                    { ml: 80, price: 2200 },
+                    { ml: 120, price: 3200 }
+                ],
+                image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'CEO Man, Date Woman, Honey Oud, White Oud',
+                heartNotes: 'Rich Florals, Spiced Leather & Tonka',
+                baseNotes: 'Mahogany, Golden Amber & Madagascar Vanilla',
+                description: 'Exclusive 4x20ml collection of top Bella Vita luxury extraits in a velvet-lined gift coffret.',
+                sillage: 'Long Lasting',
+                longevity: '10+ Hours',
+                rating: 4.8,
+                badge: 'Deluxe Coffret'
+            },
+            {
+                id: 'bellavita-honey-oud',
+                name: 'BELLA VITA HONEY OUD GOLD',
+                subtitle: 'Parfum Gold Edition • 100ml Bottle',
+                brandKey: 'bellavita',
+                brandName: 'Bella Vita Luxury',
+                category: 'amber',
+                price: 2400,
+                sizes: [
+                    { ml: 50, price: 2400 },
+                    { ml: 100, price: 3600 }
+                ],
+                image: 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Wild Honey, Bergamot',
+                heartNotes: 'Damask Rose, Oud Accord, Spices',
+                baseNotes: 'Madagascar Vanilla, Golden Amber',
+                description: 'An oriental rich elixir with golden nectar, warm spices, and a precious agarwood base.',
+                sillage: 'Intense',
+                longevity: '10-12 Hours',
+                rating: 4.9,
+                badge: 'Gold Edition'
+            },
+            {
+                id: 'bellavita-white-oud',
+                name: 'BELLA VITA WHITE OUD PARFUM',
+                subtitle: 'Intense Eau De Parfum • 100ml',
+                brandKey: 'bellavita',
+                brandName: 'Bella Vita Luxury',
+                category: 'woody',
+                price: 2300,
+                sizes: [
+                    { ml: 50, price: 2300 },
+                    { ml: 100, price: 3500 }
+                ],
+                image: 'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Artemisia, Lemon Peel',
+                heartNotes: 'Freesia, Patchouli, Tobacco Leaf',
+                baseNotes: 'Musk, White Oud, Amber',
+                description: 'Velvety blend of spicy tobacco, white oud wood, and fresh citrus nuances.',
+                sillage: 'Graceful',
+                longevity: '10+ Hours',
+                rating: 4.8,
+                badge: 'Intense EDP'
+            },
+            {
+                id: 'muse-fleur-de-soir',
+                name: 'MUSE FLEUR DE SOIR',
+                subtitle: 'Midnight Tuberose & Vanilla Extrait',
+                brandKey: 'muse',
+                brandName: 'MUSE Parfums',
+                category: 'floral',
+                price: 3200,
+                sizes: [
+                    { ml: 30, price: 3200 },
+                    { ml: 50, price: 4700 }
+                ],
+                image: 'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Pink Pepper, Bergamot',
+                heartNotes: 'Midnight Tuberose, Jasmine Sambac',
+                baseNotes: 'Vanilla Bean, Creamy Sandalwood',
+                description: 'Hypnotic nocturnal white floral nectar with velvet tuberose petals and warm spice.',
+                sillage: 'Alluring',
+                longevity: '12+ Hours',
+                rating: 4.9,
+                badge: 'New Release'
+            },
+            {
+                id: 'muse-oud-noir',
+                name: 'MUSE OUD NOIR',
+                subtitle: 'Smoky Agarwood & Amber Resin',
+                brandKey: 'muse',
+                brandName: 'MUSE Parfums',
+                category: 'amber',
+                price: 3800,
+                sizes: [
+                    { ml: 30, price: 3800 },
+                    { ml: 50, price: 4900 }
+                ],
+                image: 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=800&q=80',
+                topNotes: 'Saffron Threads, Nutmeg',
+                heartNotes: 'Royal Cambodian Oud, Damask Rose',
+                baseNotes: 'Smoky Incense, Dark Musk, Amber',
+                description: 'Regal oriental agarwood crafted with wild saffron threads and rare dark resins.',
+                sillage: 'Monumental',
+                longevity: '16+ Hours',
+                rating: 5.0,
+                badge: 'Private Extrait'
+            }
+        ];
+
+        let cart = [];
+        let coffretSelection = [];
+        let currentCategory = 'all';
+        let currentPriceTier = 'all';
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts(PRODUCTS);
+            selectPyramidTier('top');
+            renderCoffretOptions();
+            updateCoffretUI();
+            updateCartUI();
+        });
+
+        function applyPromoCode() {
+            const input = document.getElementById('promo-input');
+            const code = input.value.trim().toUpperCase();
+
+            if (!code) {
+                showToast('Please enter a valid promo code', 'warning');
+                return;
+            }
+
+            if (PROMO_CODES[code]) {
+                const promo = PROMO_CODES[code];
+                const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+                if (subtotal < promo.minSpend) {
+                    showToast(`Code ${code} requires minimum purchase of ${formatINR(promo.minSpend)}`, 'warning');
+                    return;
+                }
+
+                appliedPromo = { code: code, ...promo };
+                showToast(`Promo code ${code} applied successfully!`, 'success');
+                input.value = '';
+                updateCartUI();
+            } else {
+                showToast('Invalid promo code. Try MUSE20 or LUXURY1000', 'warning');
+            }
+        }
+
+        function applyPromoCodeDirect(code) {
+            if (PROMO_CODES[code]) {
+                appliedPromo = { code: code, ...PROMO_CODES[code] };
+                updateCartUI();
+                toggleCartDrawer();
+                showToast(`Promo code ${code} (${PROMO_CODES[code].label}) applied to bag!`, 'success');
+            }
+        }
+
+        function removePromoCode() {
+            appliedPromo = null;
+            showToast('Promo code removed', 'info');
+            updateCartUI();
+        }
+
+        function toggleOffersModal() {
+            const modal = document.getElementById('offers-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function filterAndRender() {
+            let list = PRODUCTS;
+
+            // Filter by Category
+            if (currentCategory !== 'all') {
+                list = list.filter(p => p.brandKey === currentCategory || p.category === currentCategory);
+            }
+
+            // Filter by Price Range
+            if (currentPriceTier === 'p1') {
+                list = list.filter(p => p.price >= 2000 && p.price <= 3000);
+            } else if (currentPriceTier === 'p2') {
+                list = list.filter(p => p.price > 3000 && p.price <= 4000);
+            } else if (currentPriceTier === 'p3') {
+                list = list.filter(p => p.price > 4000 && p.price <= 5000);
+            }
+
+            renderProducts(list);
+        }
+
+        function filterProducts(categoryKey) {
+            currentCategory = categoryKey;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gold', 'text-white', 'border-gold', 'active');
+                btn.classList.add('border-linen', 'text-charcoal');
+            });
+            
+            if (event && event.target) {
+                event.target.classList.add('bg-gold', 'text-white', 'border-gold', 'active');
+                event.target.classList.remove('border-linen', 'text-charcoal');
+            }
+
+            filterAndRender();
+        }
+
+        function filterByPrice(tier) {
+            currentPriceTier = tier;
+
+            document.querySelectorAll('.price-btn').forEach(btn => {
+                btn.classList.remove('bg-gold', 'text-white', 'border-gold', 'active');
+                btn.classList.add('border-linen', 'text-charcoal');
+            });
+
+            if (event && event.target) {
+                event.target.classList.add('bg-gold', 'text-white', 'border-gold', 'active');
+                event.target.classList.remove('border-linen', 'text-charcoal');
+            }
+
+            filterAndRender();
+        }
+
+        function renderProducts(productList) {
+            const grid = document.getElementById('product-grid');
+            if (productList.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-charcoal/60 text-xs">No fragrances match the selected criteria. Try adjusting your price or house filters.</div>`;
+                return;
+            }
+
+            grid.innerHTML = productList.map(prod => `
+                <div class="product-card group bg-alabaster border border-linen rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gold-border-glow">
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative aspect-square bg-linen/50 img-zoom-container cursor-pointer" onclick="openQuickView('${prod.id}')">
+                            <img src="${prod.image}" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80';"
+                                 alt="${prod.name}" 
+                                 class="w-full h-full object-cover">
+                            <span class="absolute top-2 left-2 bg-obsidian text-alabaster text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-full border border-gold/30">
+                                ${prod.badge}
+                            </span>
+                            <button onclick="event.stopPropagation(); openQuickView('${prod.id}')" class="absolute bottom-2 right-2 bg-alabaster/90 text-obsidian p-1.5 rounded-full shadow-md hover:bg-gold hover:text-white transition-colors" title="Quick View">
+                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+
+                        <!-- Product Content -->
+                        <div class="p-3 space-y-1.5">
+                            <span class="text-[9px] font-semibold uppercase tracking-widest text-gold block">${prod.brandName}</span>
+                            <div class="flex justify-between items-start gap-1">
+                                <div>
+                                    <h3 class="font-serif text-sm md:text-base text-obsidian font-medium group-hover:text-gold transition-colors leading-tight">${prod.name}</h3>
+                                    <p class="text-[10px] text-charcoal/60 mt-0.5">${prod.subtitle}</p>
+                                </div>
+                                <span class="font-serif text-xs md:text-sm font-semibold text-obsidian whitespace-nowrap">${formatINR(prod.price)}</span>
+                            </div>
+
+                            <p class="text-[10px] text-charcoal/70 line-clamp-2 font-light leading-snug">
+                                ${prod.description}
+                            </p>
+
+                            <!-- Scent Accord Tags -->
+                            <div class="pt-1 flex flex-wrap gap-1 text-[9px] text-charcoal/80">
+                                <span class="bg-linen px-1.5 py-0.5 rounded-full border border-sand">Top: ${prod.topNotes.split(',')[0]}</span>
+                                <span class="bg-linen px-1.5 py-0.5 rounded-full border border-sand">Base: ${prod.baseNotes.split(',')[0]}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Actions -->
+                    <div class="p-3 pt-0">
+                        <button onclick="addToCart('${prod.id}', ${prod.sizes[0].ml})" class="w-full py-2 bg-obsidian text-alabaster text-[10px] uppercase tracking-wider font-medium rounded hover:bg-gold hover:text-obsidian transition-colors duration-300 flex items-center justify-center space-x-1">
+                            <i data-lucide="plus" class="w-3 h-3"></i>
+                            <span>Add — ${formatINR(prod.price)}</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function selectPyramidTier(tierKey) {
+            const data = PYRAMID_DATA[tierKey];
+            const contentBox = document.getElementById('pyramid-content');
+
+            ['top', 'heart', 'base'].forEach(k => {
+                const btn = document.getElementById(`btn-tier-${k}`);
+                if (k === tierKey) {
+                    btn.classList.add('bg-alabaster', 'border-gold');
+                    btn.classList.remove('bg-alabaster/60', 'border-transparent');
+                } else {
+                    btn.classList.remove('bg-alabaster', 'border-gold');
+                    btn.classList.add('bg-alabaster/60', 'border-transparent');
+                }
+            });
+
+            contentBox.innerHTML = `
+                <div class="animate-fade-in space-y-6">
+                    <div class="flex justify-between items-center border-b border-linen pb-4">
+                        <div>
+                            <span class="text-gold text-xs tracking-widest uppercase font-semibold">Stage Duration</span>
+                            <h3 class="font-serif text-2xl text-obsidian font-medium">${data.title}</h3>
+                        </div>
+                        <span class="bg-gold/10 text-gold px-4 py-1.5 rounded-full text-xs font-semibold">${data.duration}</span>
+                    </div>
+
+                    <p class="text-sm text-charcoal/80 leading-relaxed font-light">${data.description}</p>
+
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-gold font-semibold mb-3">Key Ingredients In This Accord:</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            ${data.ingredients.map(ing => `
+                                <div class="bg-linen/60 p-3 rounded-lg border border-sand flex items-center space-x-2 text-xs font-medium text-obsidian">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
+                                    <span>${ing}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-obsidian text-alabaster rounded-xl text-xs space-y-1">
+                        <span class="text-gold font-semibold uppercase tracking-wider block">Master Perfumer Note:</span>
+                        <p class="text-alabaster/80 italic font-light">${data.craftingNote}</p>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function renderCoffretOptions() {
+            const container = document.getElementById('coffret-options');
+            container.innerHTML = PRODUCTS.map(prod => {
+                const isSelected = coffretSelection.includes(prod.id);
+                return `
+                    <button onclick="toggleCoffretItem('${prod.id}')" class="p-3 rounded-xl text-left border transition-all text-xs flex items-center justify-between ${isSelected ? 'bg-gold text-obsidian border-gold font-semibold' : 'bg-obsidian/60 text-alabaster border-alabaster/20 hover:border-gold'}">
+                        <span>${prod.name}</span>
+                        <i data-lucide="${isSelected ? 'check-circle' : 'plus'}" class="w-4 h-4"></i>
+                    </button>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function toggleCoffretItem(id) {
+            if (coffretSelection.includes(id)) {
+                coffretSelection = coffretSelection.filter(item => item !== id);
+            } else {
+                if (coffretSelection.length >= 3) {
+                    showToast('Maximum 3 vials allowed in coffret', 'warning');
+                    return;
+                }
+                coffretSelection.push(id);
+            }
+
+            updateCoffretUI();
+            renderCoffretOptions();
+        }
+
+        function updateCoffretUI() {
+            document.getElementById('set-count').innerText = coffretSelection.length;
+            const slotsContainer = document.getElementById('coffret-slots');
+            
+            let html = '';
+            for (let i = 0; i < 3; i++) {
+                if (coffretSelection[i]) {
+                    const prod = PRODUCTS.find(p => p.id === coffretSelection[i]);
+                    html += `
+                        <div class="p-3 bg-gold/20 border border-gold rounded-xl text-center text-xs text-alabaster font-medium flex flex-col items-center justify-center min-h-[70px]">
+                            <span class="text-gold font-serif">${prod.name}</span>
+                            <span class="text-[10px] text-alabaster/70">10ml Spray</span>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="p-3 border border-dashed border-alabaster/30 rounded-xl text-center text-xs text-alabaster/40 flex flex-col items-center justify-center min-h-[70px]">
+                            <span>Empty Vial ${i+1}</span>
+                        </div>
+                    `;
+                }
+            }
+            slotsContainer.innerHTML = html;
+
+            const addBtn = document.getElementById('add-coffret-btn');
+            if (coffretSelection.length === 3) {
+                addBtn.disabled = false;
+                addBtn.classList.remove('bg-gold/50', 'cursor-not-allowed');
+                addBtn.classList.add('bg-gold', 'hover:bg-alabaster', 'cursor-pointer');
+            } else {
+                addBtn.disabled = true;
+                addBtn.classList.add('bg-gold/50', 'cursor-not-allowed');
+                addBtn.classList.remove('bg-gold', 'hover:bg-alabaster', 'cursor-pointer');
+            }
+        }
+
+        function addCoffretToCart() {
+            if (coffretSelection.length !== 3) return;
+            const names = coffretSelection.map(id => PRODUCTS.find(p => p.id === id).name).join(', ');
+            
+            const coffretItem = {
+                id: 'custom-coffret-' + Date.now(),
+                name: 'Custom Discovery Coffret',
+                subtitle: `Set of 3: ${names}`,
+                price: 3500,
+                size: '3x 10ml',
+                image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=400&q=80',
+                qty: 1
+            };
+
+            cart.push(coffretItem);
+            updateCartUI();
+            toggleCartDrawer();
+            showToast('Custom Coffret (₹3,500) added to bag!', 'success');
+            
+            coffretSelection = [];
+            updateCoffretUI();
+            renderCoffretOptions();
+        }
+
+        function addToCart(productId, sizeMl) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const selectedSize = product.sizes.find(s => s.ml === sizeMl) || product.sizes[0];
+            const existingIndex = cart.findIndex(item => item.id === product.id && item.size === `${selectedSize.ml}ml`);
+
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    subtitle: product.subtitle,
+                    price: selectedSize.price,
+                    size: `${selectedSize.ml}ml`,
+                    image: product.image,
+                    qty: 1
+                });
+            }
+
+            updateCartUI();
+            toggleCartDrawer();
+            showToast(`${product.name} (${selectedSize.ml}ml) added to bag`, 'success');
+        }
+
+        function updateCartQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-count-badge');
+            const subtotalElem = document.getElementById('cart-subtotal');
+            const totalElem = document.getElementById('cart-total');
+            const shippingProgressText = document.getElementById('shipping-progress-text');
+            const shippingProgressBar = document.getElementById('shipping-progress-bar');
+            const shippingProgressPercent = document.getElementById('shipping-progress-percent');
+            const discountRow = document.getElementById('discount-row');
+            const discountLabel = document.getElementById('discount-label');
+            const discountAmountElem = document.getElementById('cart-discount-amount');
+            const appliedPromoTag = document.getElementById('applied-promo-tag');
+            const promoCodeName = document.getElementById('promo-code-name');
+
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            let discount = 0;
+            if (appliedPromo) {
+                if (subtotal < appliedPromo.minSpend) {
+                    appliedPromo = null;
+                    showToast('Promo removed: subtotal below required minimum', 'warning');
+                } else if (appliedPromo.type === 'percent') {
+                    discount = Math.round(subtotal * appliedPromo.value);
+                } else if (appliedPromo.type === 'fixed') {
+                    discount = Math.min(subtotal, appliedPromo.value);
+                }
+            }
+
+            const total = Math.max(0, subtotal - discount);
+
+            badge.innerText = totalItems;
+            if (totalItems > 0) {
+                badge.classList.remove('scale-0');
+            } else {
+                badge.classList.add('scale-0');
+            }
+
+            const freeShippingThreshold = 3500;
+            const progress = Math.min(100, Math.round((subtotal / freeShippingThreshold) * 100));
+            shippingProgressBar.style.width = `${progress}%`;
+            shippingProgressPercent.innerText = `${progress}%`;
+
+            if (subtotal >= freeShippingThreshold) {
+                shippingProgressText.innerText = 'You qualify for Free Express Shipping!';
+            } else {
+                const diff = freeShippingThreshold - subtotal;
+                shippingProgressText.innerText = `Add ${formatINR(diff)} more for Free Express Shipping`;
+            }
+
+            if (appliedPromo) {
+                appliedPromoTag.classList.remove('hidden');
+                promoCodeName.innerText = `${appliedPromo.code} (${appliedPromo.label})`;
+                discountRow.classList.remove('hidden');
+                discountLabel.innerText = appliedPromo.label;
+                discountAmountElem.innerText = `-${formatINR(discount)}`;
+            } else {
+                appliedPromoTag.classList.add('hidden');
+                discountRow.classList.add('hidden');
+            }
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center space-y-4 py-16 text-charcoal/50">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 text-sand"></i>
+                        <p class="font-serif text-lg">Your shopping bag is empty</p>
+                        <button onclick="toggleCartDrawer()" class="px-6 py-2 bg-gold text-obsidian text-xs uppercase tracking-widest font-semibold rounded">
+                            Discover Scents (₹2k-₹5k)
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map((item, idx) => `
+                    <div class="flex space-x-4 p-4 bg-white rounded-xl border border-linen shadow-sm items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded-lg bg-linen">
+                        <div class="flex-grow space-y-1">
+                            <h4 class="font-serif font-medium text-obsidian text-sm">${item.name}</h4>
+                            <p class="text-[11px] text-charcoal/60">${item.subtitle}</p>
+                            <span class="inline-block text-[10px] bg-linen px-2 py-0.5 rounded text-gold font-medium">${item.size}</span>
+                            <div class="flex items-center justify-between pt-2">
+                                <div class="flex items-center space-x-2 bg-linen px-2 py-1 rounded">
+                                    <button onclick="updateCartQty(${idx}, -1)" class="text-xs hover:text-gold font-bold px-1">-</button>
+                                    <span class="text-xs font-semibold px-1">${item.qty}</span>
+                                    <button onclick="updateCartQty(${idx}, 1)" class="text-xs hover:text-gold font-bold px-1">+</button>
+                                </div>
+                                <span class="font-serif font-semibold text-sm text-obsidian">${formatINR(item.price * item.qty)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            subtotalElem.innerText = formatINR(subtotal);
+            totalElem.innerText = formatINR(total);
+            lucide.createIcons();
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-panel');
+            
+            if (drawer.classList.contains('opacity-0')) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                panel.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+                panel.classList.add('translate-x-full');
+            }
+        }
+
+        function simulateCheckout() {
+            if (cart.length === 0) {
+                showToast('Your bag is empty', 'warning');
+                return;
+            }
+            showToast('Redirecting to secure luxury checkout gateway...', 'success');
+            setTimeout(() => {
+                cart = [];
+                appliedPromo = null;
+                updateCartUI();
+                toggleCartDrawer();
+                showToast('Thank you! Order confirmed with discount applied.', 'success');
+            }, 2500);
+        }
+
+        const QUIZ_QUESTIONS = [
+            {
+                question: "Which sensory atmosphere feels most comforting to you?",
+                options: [
+                    { label: "A sunlit Mediterranean citrus orchard overlooking the coast", tag: "fresh" },
+                    { label: "A cozy mahogany library with crackling fireplace and leather armchairs", tag: "woody" },
+                    { label: "A twilight botanical garden blooming with midnight jasmine", tag: "amber" },
+                    { label: "An exclusive art gallery with crisp silk dresses and marble pillars", tag: "floral" }
+                ]
+            },
+            {
+                question: "When do you plan to wear your signature scent?",
+                options: [
+                    { label: "Daily essential for morning routine & business meetings", tag: "fresh" },
+                    { label: "Intimate evening dates and candlelit dinners", tag: "woody" },
+                    { label: "High-profile galas, parties, and night events", tag: "amber" },
+                    { label: "Relaxing weekends, brunch, and mindful moments", tag: "floral" }
+                ]
+            },
+            {
+                question: "Select your preferred intensity and aura footprint:",
+                options: [
+                    { label: "Subtle skin scent that leaves a soft trail when hugged", tag: "floral" },
+                    { label: "Radiant & uplifting freshness that turns heads subtly", tag: "fresh" },
+                    { label: "Deep, mysterious and lingering for 12+ hours", tag: "amber" },
+                    { label: "Rich, warm woodiness with heavy memorable sillage", tag: "woody" }
+                ]
+            }
+        ];
+
+        let quizIndex = 0;
+        let quizAnswers = [];
+
+        function openQuizModal() {
+            quizIndex = 0;
+            quizAnswers = [];
+            document.getElementById('quiz-modal').classList.remove('hidden');
+            renderQuizStep(0);
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        function renderQuizStep(stepIdx) {
+            const container = document.getElementById('quiz-step-container');
+
+            if (stepIdx >= QUIZ_QUESTIONS.length) {
+                const counts = {};
+                quizAnswers.forEach(tag => counts[tag] = (counts[tag] || 0) + 1);
+                const winnerTag = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b, 'woody');
+                const matchedProduct = PRODUCTS.find(p => p.category === winnerTag) || PRODUCTS[0];
+
+                container.innerHTML = `
+                    <div class="text-center space-y-6 py-4 animate-fade-in">
+                        <span class="text-gold text-xs tracking-[0.4em] uppercase font-semibold">Your Olfactory Match</span>
+                        <h3 class="font-serif text-3xl md:text-4xl font-light text-obsidian">We Found Your Signature</h3>
+                        
+                        <div class="bg-linen/60 p-6 rounded-2xl border border-gold/30 max-w-md mx-auto space-y-4">
+                            <img src="${matchedProduct.image}" class="w-32 h-40 object-cover mx-auto rounded-xl shadow-md">
+                            <div>
+                                <h4 class="font-serif text-2xl text-obsidian font-medium">${matchedProduct.name}</h4>
+                                <p class="text-xs text-gold font-medium uppercase tracking-widest">${matchedProduct.subtitle}</p>
+                            </div>
+                            <p class="text-xs text-charcoal/70 leading-relaxed font-light">${matchedProduct.description}</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+                            <button onclick="addToCart('${matchedProduct.id}', ${matchedProduct.sizes[0].ml}); closeQuizModal();" class="px-8 py-3.5 bg-gold text-obsidian text-xs font-semibold uppercase tracking-widest rounded-lg hover:bg-obsidian hover:text-white transition-colors">
+                                Add Match To Bag — ${formatINR(matchedProduct.price)}
+                            </button>
+                            <button onclick="closeQuizModal()" class="px-8 py-3.5 border border-sand text-charcoal text-xs font-medium uppercase tracking-widest rounded-lg hover:border-gold">
+                                Close & Explore All
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = QUIZ_QUESTIONS[stepIdx];
+            container.innerHTML = `
+                <div class="space-y-6 animate-fade-in">
+                    <div class="flex justify-between items-center text-xs tracking-widest text-gold uppercase font-semibold">
+                        <span>Scent Personality Quiz</span>
+                        <span>Question ${stepIdx + 1} of ${QUIZ_QUESTIONS.length}</span>
+                    </div>
+
+                    <h3 class="font-serif text-2xl md:text-3xl text-obsidian font-light leading-snug">${q.question}</h3>
+
+                    <div class="space-y-3 pt-2">
+                        ${q.options.map((opt, i) => `
+                            <button onclick="handleQuizAnswer('${opt.tag}')" class="w-full text-left p-4 rounded-xl border border-linen bg-white hover:border-gold hover:bg-linen/40 transition-all text-xs text-charcoal flex items-center justify-between group">
+                                <span>${opt.label}</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function handleQuizAnswer(tag) {
+            quizAnswers.push(tag);
+            quizIndex += 1;
+            renderQuizStep(quizIndex);
+        }
+
+        function openQuickView(id) {
+            const prod = PRODUCTS.find(p => p.id === id);
+            if (!prod) return;
+
+            const modal = document.getElementById('quickview-modal');
+            const content = document.getElementById('quickview-content');
+
+            content.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-linen">
+                        <img src="${prod.image}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-5">
+                        <div>
+                            <span class="text-gold text-xs font-semibold tracking-widest uppercase">${prod.badge}</span>
+                            <h3 class="font-serif text-3xl text-obsidian font-medium">${prod.name}</h3>
+                            <p class="text-xs text-charcoal/60 mt-1">${prod.subtitle}</p>
+                        </div>
+
+                        <p class="text-xs text-charcoal/80 leading-relaxed font-light">${prod.description}</p>
+
+                        <div class="space-y-2 border-y border-linen py-4 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-charcoal/60">Top Notes:</span>
+                                <span class="font-medium text-obsidian">${prod.topNotes}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-charcoal/60">Heart Notes:</span>
+                                <span class="font-medium text-obsidian">${prod.heartNotes}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-charcoal/60">Base Notes:</span>
+                                <span class="font-medium text-obsidian">${prod.baseNotes}</span>
+                            </div>
+                            <div class="flex justify-between pt-2 border-t border-linen">
+                                <span class="text-charcoal/60">Sillage & Longevity:</span>
+                                <span class="font-semibold text-gold">${prod.sillage} • ${prod.longevity}</span>
+                            </div>
+                        </div>
+
+                        <!-- Size Selector -->
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-gold font-semibold mb-1.5">Select Size:</label>
+                            <div class="flex gap-2">
+                                ${prod.sizes.map(s => `
+                                    <button onclick="addToCart('${prod.id}', ${s.ml}); closeQuickView();" class="px-4 py-2 bg-linen hover:bg-gold hover:text-white transition-colors text-xs font-semibold rounded-lg border border-sand">
+                                        ${s.ml}ml — ${formatINR(s.price)}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-linen">
+                            <div>
+                                <span class="text-xs text-charcoal/60 block">Price Range</span>
+                                <span class="font-serif text-2xl text-obsidian font-semibold">${formatINR(prod.price)}</span>
+                            </div>
+                            <button onclick="addToCart('${prod.id}', ${prod.sizes[0].ml}); closeQuickView();" class="px-8 py-3 bg-gold text-obsidian text-xs uppercase tracking-widest font-semibold rounded-lg hover:bg-obsidian hover:text-white transition-colors">
+                                Add To Bag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickview-modal').classList.add('hidden');
+        }
+
+        function toggleSearchModal() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('search-input').focus();
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results');
+
+            if (!query.trim()) {
+                resultsContainer.innerHTML = `<p class="text-xs text-charcoal/50 text-center py-4">Type to search by ingredient or perfume name...</p>`;
+                return;
+            }
+
+            const matches = PRODUCTS.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.subtitle.toLowerCase().includes(query) ||
+                p.topNotes.toLowerCase().includes(query) ||
+                p.baseNotes.toLowerCase().includes(query)
+            );
+
+            if (matches.length === 0) {
+                resultsContainer.innerHTML = `<p class="text-xs text-charcoal/50 text-center py-4">No matching fragrances found.</p>`;
+            } else {
+                resultsContainer.innerHTML = matches.map(prod => `
+                    <div onclick="openQuickView('${prod.id}'); toggleSearchModal();" class="p-3 bg-linen/50 hover:bg-gold/20 rounded-xl cursor-pointer flex items-center justify-between transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <img src="${prod.image}" class="w-10 h-12 object-cover rounded">
+                            <div>
+                                <h4 class="font-serif text-sm font-medium text-obsidian">${prod.name}</h4>
+                                <p class="text-[11px] text-charcoal/60">${prod.subtitle}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-serif text-gold font-semibold">${formatINR(prod.price)}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-obsidian text-alabaster border-gold/40';
+            if (type === 'warning') bgClass = 'bg-amber-900 text-alabaster border-amber-500';
+            
+            toast.className = `p-4 rounded-xl shadow-2xl border text-xs font-medium flex items-center space-x-3 animate-slide-in pointer-events-auto ${bgClass}`;
+            toast.innerHTML = `
+                <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const input = document.getElementById('newsletter-email');
+            if (input.value) {
+                showToast('Welcome to the MUSE Private Collector Gazette', 'success');
+                input.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
